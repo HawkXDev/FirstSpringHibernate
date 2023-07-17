@@ -17,8 +17,14 @@ public class Person {
     private String name;
 
     @Min(value = 0, message = "Age must be greater than 0")
+    @Max(value = 99, message = "Age must be less than 100")
     @Column(name = "age")
     private int age;
+
+    @Column(name = "email")
+    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Email must be valid")
+    private String email;
 
     public Person() {
     }
@@ -50,5 +56,13 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
