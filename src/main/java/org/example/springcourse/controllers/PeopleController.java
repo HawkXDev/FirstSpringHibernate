@@ -1,6 +1,7 @@
 package org.example.springcourse.controllers;
 
 import org.example.springcourse.models.Person;
+import org.example.springcourse.services.ItemService;
 import org.example.springcourse.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,16 +16,23 @@ import javax.validation.Valid;
 public class PeopleController {
 
     private final PeopleService peopleService;
+    private final ItemService itemService;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, ItemService itemService) {
         this.peopleService = peopleService;
+        this.itemService = itemService;
     }
 
     @GetMapping
     public String index(Model model) {
-        // We will get all the people from the DAO and pass them to the view for display
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("AirPods");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
+
         return "people/index";
     }
 
